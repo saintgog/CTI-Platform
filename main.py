@@ -65,6 +65,7 @@ for item in cisa_data["vulnerabilities"][:10]:
 
     github_data = search_github_for_cve(cve_id)
     github_repo_count = github_data["total_count"]
+    github_repos = github_data["repos"]
 
     cvss_score, severity, cvss_version = extract_cvss(cve)
     threat_score = calculate_threat_score(cvss_score, github_repo_count)
@@ -72,18 +73,21 @@ for item in cisa_data["vulnerabilities"][:10]:
     description = cve["descriptions"][0]["value"]
 
     report_item = {
-        "cve": cve_id,
-        "vendor": item["vendorProject"],
-        "product": item["product"],
-        "date_added_to_kev": item["dateAdded"],
-        "cvss": cvss_score,
-        "severity": severity,
-        "cvss_version": cvss_version,
-        "github_repositories": github_repo_count,
-        "threat_score": threat_score,
-        "priority": priority,
-        "summary": description
-    }
+    "cve": cve_id,
+    "vendor": item["vendorProject"],
+    "product": item["product"],
+    "date_added_to_kev": item["dateAdded"],
+    "cvss": cvss_score,
+    "severity": severity,
+    "cvss_version": cvss_version,
+
+    "github_repositories": github_repo_count,
+    "github_repositories_found": github_repos,
+
+    "threat_score": threat_score,
+    "priority": priority,
+    "summary": description
+}
 
     report.append(report_item)
 

@@ -8,7 +8,6 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 
 def search_github_for_cve(cve_id):
-
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github+json"
@@ -22,10 +21,20 @@ def search_github_for_cve(cve_id):
         "order": "desc"
     }
 
-    response = requests.get(
-        url,
-        headers=headers,
-        params=params
-    )
+    response = requests.get(url, headers=headers, params=params)
+    data = response.json()
 
-    return response.json()
+    repos = []
+
+    for repo in data.get("items", [])[:5]:
+        repos.append({
+            "name": repo["full_name"],
+            "url": repo["html_url"],
+            "stars": repo["stargazers_count"],
+            "updated_at": repo["updated_at"]
+        })
+
+    return {
+        "total_count": data.get("total_count", 0),
+        "repos": repos
+    }
