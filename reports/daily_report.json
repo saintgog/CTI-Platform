@@ -1,0 +1,122 @@
+[
+    {
+        "cve": "CVE-2026-45247",
+        "vendor": "Mirasvit",
+        "product": "Mirasvit Full Page Cache Warmer",
+        "date_added_to_kev": "2026-06-03",
+        "cvss": 9.3,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v4.0",
+        "threat_score": 90,
+        "priority": "CRITICAL",
+        "summary": "Mirasvit Full Page Cache Warmer for Magento 2 before version 1.11.12 contains a PHP object injection vulnerability that allows unauthenticated attackers to achieve remote code execution by supplying a crafted serialized PHP object in the CacheWarmer cookie. Attackers can exploit the unrestricted call to PHP's native unserialize() function combined with gadget chains available in Magento and its dependencies to execute arbitrary code on the server."
+    },
+    {
+        "cve": "CVE-2026-48027",
+        "vendor": "Nx",
+        "product": "Nx Console",
+        "date_added_to_kev": "2026-05-27",
+        "cvss": 9.3,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v4.0",
+        "threat_score": 90,
+        "priority": "CRITICAL",
+        "summary": "Nx Console is the user interface for Nx & Lerna. On 19 May 2026, a malicious version of Nx Console, 18.95.0, was published at 12:30 PM UTC and removed soon after at 12:48 PM UTC, leaving it available for ~18 minutes in Visual Studio Marketplace. For OpenVSX, the problem was detected later, and the compromised version was available from 12:33 UTC to 13:09 UTC (~36 minutes). Version 18.100.0 of Nx Console is not compromised and users may remediate by upgrading to that version."
+    },
+    {
+        "cve": "CVE-2026-45321",
+        "vendor": "TanStack",
+        "product": "TanStack",
+        "date_added_to_kev": "2026-05-27",
+        "cvss": 9.6,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v3.1",
+        "threat_score": 90,
+        "priority": "CRITICAL",
+        "summary": "On 2026-05-11, between approximately 19:20 and 19:26 UTC, 84 malicious versions across 42 @tanstack/* packages were published to the npm registry. The publishes were authenticated via the legitimate GitHub Actions OIDC trusted-publisher binding for TanStack/router, but the publish workflow itself was not modified. The attacker chained three known vulnerability classes \u2014 a pull_request_target \"Pwn Request\" misconfiguration, GitHub Actions cache poisoning across the fork\u2194base trust boundary, and runtime memory extraction of the OIDC token from the Actions runner process \u2014 to publish credential-stealing malware under a trusted identity. Each affected package received exactly two malicious versions, published a few minutes apart."
+    },
+    {
+        "cve": "CVE-2026-8398",
+        "vendor": "Daemon",
+        "product": "Daemon Tools Lite",
+        "date_added_to_kev": "2026-05-27",
+        "cvss": 9.3,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v4.0",
+        "threat_score": 90,
+        "priority": "CRITICAL",
+        "summary": "A supply chain attack compromised the official installation packages of DAEMON Tools Lite (Windows versions 12.5.0.2421 through 12.5.0.2434), distributed from the legitimate website daemon-tools.cc between approximately April 8, 2026, and May 5, 2026. Attackers gained unauthorized access to the vendor's (AVB Disc Soft) build or distribution infrastructure and trojanized three binaries: DTHelper.exe, DiscSoftBusServiceLite.exe, and DTShellHlp.exe. These files were digitally signed with the legitimate AVB Disc Soft code-signing certificate, allowing the malicious installers to appear trustworthy and bypass signature-based detection."
+    },
+    {
+        "cve": "CVE-2026-48172",
+        "vendor": "LiteSpeed",
+        "product": "cPanel Plugin",
+        "date_added_to_kev": "2026-05-26",
+        "cvss": 10.0,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v4.0",
+        "threat_score": 90,
+        "priority": "CRITICAL",
+        "summary": "LiteSpeed User-End cPanel Plugin before 2.4.5 allows privilege escalation (possibly to root), as exploited in the wild in May 2026. Detection is best done via a command line of grep -rE \"cpanel_jsonapi_func=redisAble\" /var/cpanel/logs /usr/local/cpanel/logs/ 2>/dev/null in Bash. If you get no output, you have not been hit with exploitation of the vulnerability. If there is output, we recommend you examine the IP addresses in the list, determine if they are valid IP addresses, and if not, block them. To determine damage done, examine the system logs for use by the detected IP addresses. The issue is related to mishandling of Redis enable/disable features. The recommended minimum version is 2.4.7."
+    },
+    {
+        "cve": "CVE-2026-9082",
+        "vendor": "Drupal",
+        "product": "Core",
+        "date_added_to_kev": "2026-05-22",
+        "cvss": 9.8,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v3.1",
+        "threat_score": 90,
+        "priority": "CRITICAL",
+        "summary": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Drupal Drupal core allows SQL Injection.\n\nThis issue affects Drupal core: from 8.9.0 before 10.4.10, from 10.5.0 before 10.5.10, from 10.6.0 before 10.6.9, from 11.0.0 before 11.1.10, from 11.2.0 before 11.2.12, from 11.3.0 before 11.3.10."
+    },
+    {
+        "cve": "CVE-2022-0492",
+        "vendor": "Linux",
+        "product": "Kernel",
+        "date_added_to_kev": "2026-06-02",
+        "cvss": 7.8,
+        "severity": "HIGH",
+        "cvss_version": "CVSS v3.1",
+        "threat_score": 75,
+        "priority": "HIGH",
+        "summary": "A vulnerability was found in the Linux kernel\u2019s cgroup_release_agent_write in the kernel/cgroup/cgroup-v1.c function. This flaw, under certain circumstances, allows the use of the cgroups v1 release_agent feature to escalate privileges and bypass the namespace isolation unexpectedly."
+    },
+    {
+        "cve": "CVE-2025-48595",
+        "vendor": "Android",
+        "product": "Framework",
+        "date_added_to_kev": "2026-06-02",
+        "cvss": 8.4,
+        "severity": "HIGH",
+        "cvss_version": "CVSS v3.1",
+        "threat_score": 75,
+        "priority": "HIGH",
+        "summary": "In multiple locations, there is a possible way to achieve code execution due to an integer overflow. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation."
+    },
+    {
+        "cve": "CVE-2024-21182",
+        "vendor": "Oracle",
+        "product": "WebLogic Server",
+        "date_added_to_kev": "2026-06-01",
+        "cvss": 7.5,
+        "severity": "HIGH",
+        "cvss_version": "CVSS v3.1",
+        "threat_score": 75,
+        "priority": "HIGH",
+        "summary": "Vulnerability in the Oracle WebLogic Server product of Oracle Fusion Middleware (component: Core).  Supported versions that are affected are 12.2.1.4.0 and  14.1.1.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via T3, IIOP to compromise Oracle WebLogic Server.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle WebLogic Server accessible data. CVSS 3.1 Base Score 7.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)."
+    },
+    {
+        "cve": "CVE-2026-0257",
+        "vendor": "Palo Alto Networks",
+        "product": "PAN-OS",
+        "date_added_to_kev": "2026-05-29",
+        "cvss": 7.8,
+        "severity": "HIGH",
+        "cvss_version": "CVSS v4.0",
+        "threat_score": 75,
+        "priority": "HIGH",
+        "summary": "Authentication bypass vulnerabilities in the GlobalProtect portal and gateway of Palo Alto Networks PAN-OS\u00ae software allows the attacker to bypass security restrictions and establish an unauthorized VPN connection.\n\nPanorama and Cloud NGFW are not impacted by these issues."
+    }
+]

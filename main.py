@@ -1,0 +1,118 @@
+import json
+import os
+from collectors.cisa import collect_cisa_kev
+from collectors.nvd import get_nvd_cve_details
+
+
+def extract_cvss(cve):
+    metrics = cve.get("metrics", {})
+
+    if "cvssMetricV40" in metrics:
+        cvss_data = metrics["cvssMetricV40"][0]["cvssData"]
+        return cvss_data["baseScore"], cvss_data["baseSeverity"], "CVSS v4.0"
+
+    if "cvssMetricV31" in metrics:
+        cvss_data = metrics["cvssMetricV31"][0]["cvssData"]
+        return cvss_data["baseScore"], cvss_data["baseSeverity"], "CVSS v3.1"
+
+    return 0, "UNKNOWN", "NO CVSS"
+
+
+def calculate_threat_score(cvss_score, in_cisa_kev=True):
+    score = 0
+
+    if in_cisa_kev:
+        score += 50
+
+    if cvss_score >= 9:
+        score += 40
+    elif cvss_score >= 7:
+        score += 25
+    elif cvss_score >= 4:
+        score += 10
+
+    return score
+
+
+def get_priority(score):
+    if score >= 90:
+        return "CRITICAL"
+    elif score >= 70:
+        return "HIGH"
+    elif score >= 40:
+        return "MEDIUM"
+    else:
+        return "LOW"
+
+
+cisa_data = collect_cisa_kev()
+
+report = []
+
+for item in cisa_data["vulnerabilities"][:10]:
+    cve_id = item["cveID"]
+
+    nvd_data = get_nvd_cve_details(cve_id)
+    cve = nvd_data["vulnerabilities"][0]["cve"]
+
+    cvss_score, severity, cvss_version = extract_cvss(cve)
+    threat_score = calculate_threat_score(cvss_score)
+    priority = get_priority(threat_score)
+    description = cve["descriptions"][0]["value"]
+
+    report_item = {
+        "cve": cve_id,
+        "vendor": item["vendorProject"],
+        "product": item["product"],
+        "date_added_to_kev": item["dateAdded"],
+        "cvss": cvss_score,
+        "severity": severity,
+        "cvss_version": cvss_version,
+        "threat_score": threat_score,
+        "priority": priority,
+        "summary": description
+    }
+
+    report.append(report_item)
+
+
+report.sort(key=lambda x: x["threat_score"], reverse=True)
+
+os.makedirs("reports", exist_ok=True)
+
+with open("reports/daily_report.json", "w") as file:
+    json.dump(report, file, indent=4)
+
+
+print()
+print("=" * 60)
+print(" TOP PRIORITIZED THREATS ")
+print("=" * 60)
+
+for item in report:
+    print()
+    print("CVE:", item["cve"])
+    print("Vendor:", item["vendor"])
+    print("Product:", item["product"])
+    print("CVSS:", item["cvss"])
+    print("Priority:", item["priority"])
+    print("Threat Score:", item["threat_score"])
+    print("-" * 60)
+
+print()
+print("Saved report to reports/daily_report.json")
+with open("reports/daily_brief.txt", "w", encoding="utf-8") as file:
+    file.write("TOP PRIORITIZED CYBER THREATS\n")
+    file.write("=" * 60 + "\n\n")
+
+    for item in report:
+        file.write(f"CVE: {item['cve']}\n")
+        file.write(f"Vendor: {item['vendor']}\n")
+        file.write(f"Product: {item['product']}\n")
+        file.write(f"CVSS: {item['cvss']}\n")
+        file.write(f"Priority: {item['priority']}\n")
+        file.write(f"Threat Score: {item['threat_score']}\n")
+        file.write(f"Summary: {item['summary']}\n")
+        file.write("-" * 60 + "\n\n")
+
+print("Saved brief to reports/daily_brief.txt")
