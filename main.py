@@ -53,6 +53,24 @@ def get_priority(score):
         return "LOW"
 
 
+def get_exploit_confidence(github_repo_count, github_repos):
+    total_stars = 0
+
+    for repo in github_repos:
+        total_stars += repo["stars"]
+
+    if github_repo_count >= 10 or total_stars >= 50:
+        return "HIGH"
+
+    if github_repo_count >= 3 or total_stars >= 10:
+        return "MEDIUM"
+
+    if github_repo_count >= 1:
+        return "LOW"
+
+    return "NONE"
+
+
 cisa_data = collect_cisa_kev()
 
 report = []
@@ -67,27 +85,31 @@ for item in cisa_data["vulnerabilities"][:10]:
     github_repo_count = github_data["total_count"]
     github_repos = github_data["repos"]
 
+    exploit_confidence = get_exploit_confidence(
+        github_repo_count,
+        github_repos
+    )
+
     cvss_score, severity, cvss_version = extract_cvss(cve)
     threat_score = calculate_threat_score(cvss_score, github_repo_count)
     priority = get_priority(threat_score)
     description = cve["descriptions"][0]["value"]
 
     report_item = {
-    "cve": cve_id,
-    "vendor": item["vendorProject"],
-    "product": item["product"],
-    "date_added_to_kev": item["dateAdded"],
-    "cvss": cvss_score,
-    "severity": severity,
-    "cvss_version": cvss_version,
-
-    "github_repositories": github_repo_count,
-    "github_repositories_found": github_repos,
-
-    "threat_score": threat_score,
-    "priority": priority,
-    "summary": description
-}
+        "cve": cve_id,
+        "vendor": item["vendorProject"],
+        "product": item["product"],
+        "date_added_to_kev": item["dateAdded"],
+        "cvss": cvss_score,
+        "severity": severity,
+        "cvss_version": cvss_version,
+        "github_repositories": github_repo_count,
+        "github_repositories_found": github_repos,
+        "exploit_confidence": exploit_confidence,
+        "threat_score": threat_score,
+        "priority": priority,
+        "summary": description
+    }
 
     report.append(report_item)
 
@@ -109,6 +131,13 @@ with open("reports/daily_brief.txt", "w", encoding="utf-8") as file:
         file.write(f"Product: {item['product']}\n")
         file.write(f"CVSS: {item['cvss']}\n")
         file.write(f"GitHub Repositories: {item['github_repositories']}\n")
+        file.write(f"Exploit Confidence: {item['exploit_confidence']}\n")
+        file.write("GitHub Repo Details:\n")
+
+        for repo in item["github_repositories_found"]:
+            file.write(f"  - {repo['name']} | Stars: {repo['stars']} | Updated: {repo['updated_at']}\n")
+            file.write(f"    {repo['url']}\n")
+
         file.write(f"Priority: {item['priority']}\n")
         file.write(f"Threat Score: {item['threat_score']}\n")
         file.write(f"Summary: {item['summary']}\n")
@@ -127,6 +156,7 @@ for item in report:
     print("Product:", item["product"])
     print("CVSS:", item["cvss"])
     print("GitHub Repositories:", item["github_repositories"])
+    print("Exploit Confidence:", item["exploit_confidence"])
     print("Priority:", item["priority"])
     print("Threat Score:", item["threat_score"])
     print("-" * 60)
