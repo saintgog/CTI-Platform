@@ -1,5 +1,51 @@
 [
     {
+        "cve": "CVE-2026-9082",
+        "vendor": "Drupal",
+        "product": "Core",
+        "date_added_to_kev": "2026-05-22",
+        "cvss": 9.8,
+        "severity": "CRITICAL",
+        "cvss_version": "CVSS v3.1",
+        "github_repositories": 9,
+        "github_repositories_found": [
+            {
+                "name": "0xBlackash/CVE-2026-9082",
+                "url": "https://github.com/0xBlackash/CVE-2026-9082",
+                "stars": 1,
+                "updated_at": "2026-06-04T23:58:56Z"
+            },
+            {
+                "name": "thinhap/CVE-2026-9082-PoC",
+                "url": "https://github.com/thinhap/CVE-2026-9082-PoC",
+                "stars": 0,
+                "updated_at": "2026-05-28T01:38:11Z"
+            },
+            {
+                "name": "ambionics/cve-2026-9082-drupal-postgresql-rce",
+                "url": "https://github.com/ambionics/cve-2026-9082-drupal-postgresql-rce",
+                "stars": 10,
+                "updated_at": "2026-05-31T20:43:46Z"
+            },
+            {
+                "name": "strobelpierre/CVE-2026-9082",
+                "url": "https://github.com/strobelpierre/CVE-2026-9082",
+                "stars": 0,
+                "updated_at": "2026-05-27T09:32:01Z"
+            },
+            {
+                "name": "N45HT/drupal-cve-2026-9082-checker",
+                "url": "https://github.com/N45HT/drupal-cve-2026-9082-checker",
+                "stars": 6,
+                "updated_at": "2026-05-28T11:26:19Z"
+            }
+        ],
+        "exploit_confidence": "MEDIUM",
+        "threat_score": 135,
+        "priority": "CRITICAL",
+        "summary": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Drupal Drupal core allows SQL Injection.\n\nThis issue affects Drupal core: from 8.9.0 before 10.4.10, from 10.5.0 before 10.5.10, from 10.6.0 before 10.6.9, from 11.0.0 before 11.1.10, from 11.2.0 before 11.2.12, from 11.3.0 before 11.3.10."
+    },
+    {
         "cve": "CVE-2026-45321",
         "vendor": "TanStack",
         "product": "TanStack",
@@ -44,52 +90,6 @@
         "threat_score": 120,
         "priority": "CRITICAL",
         "summary": "On 2026-05-11, between approximately 19:20 and 19:26 UTC, 84 malicious versions across 42 @tanstack/* packages were published to the npm registry. The publishes were authenticated via the legitimate GitHub Actions OIDC trusted-publisher binding for TanStack/router, but the publish workflow itself was not modified. The attacker chained three known vulnerability classes \u2014 a pull_request_target \"Pwn Request\" misconfiguration, GitHub Actions cache poisoning across the fork\u2194base trust boundary, and runtime memory extraction of the OIDC token from the Actions runner process \u2014 to publish credential-stealing malware under a trusted identity. Each affected package received exactly two malicious versions, published a few minutes apart."
-    },
-    {
-        "cve": "CVE-2026-9082",
-        "vendor": "Drupal",
-        "product": "Core",
-        "date_added_to_kev": "2026-05-22",
-        "cvss": 9.8,
-        "severity": "CRITICAL",
-        "cvss_version": "CVSS v3.1",
-        "github_repositories": 9,
-        "github_repositories_found": [
-            {
-                "name": "0xBlackash/CVE-2026-9082",
-                "url": "https://github.com/0xBlackash/CVE-2026-9082",
-                "stars": 1,
-                "updated_at": "2026-06-04T23:58:56Z"
-            },
-            {
-                "name": "thinhap/CVE-2026-9082-PoC",
-                "url": "https://github.com/thinhap/CVE-2026-9082-PoC",
-                "stars": 0,
-                "updated_at": "2026-05-28T01:38:11Z"
-            },
-            {
-                "name": "ambionics/cve-2026-9082-drupal-postgresql-rce",
-                "url": "https://github.com/ambionics/cve-2026-9082-drupal-postgresql-rce",
-                "stars": 10,
-                "updated_at": "2026-05-31T20:43:46Z"
-            },
-            {
-                "name": "strobelpierre/CVE-2026-9082",
-                "url": "https://github.com/strobelpierre/CVE-2026-9082",
-                "stars": 0,
-                "updated_at": "2026-05-27T09:32:01Z"
-            },
-            {
-                "name": "N45HT/drupal-cve-2026-9082-checker",
-                "url": "https://github.com/N45HT/drupal-cve-2026-9082-checker",
-                "stars": 6,
-                "updated_at": "2026-05-28T11:26:19Z"
-            }
-        ],
-        "exploit_confidence": "MEDIUM",
-        "threat_score": 110,
-        "priority": "CRITICAL",
-        "summary": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Drupal Drupal core allows SQL Injection.\n\nThis issue affects Drupal core: from 8.9.0 before 10.4.10, from 10.5.0 before 10.5.10, from 10.6.0 before 10.6.9, from 11.0.0 before 11.1.10, from 11.2.0 before 11.2.12, from 11.3.0 before 11.3.10."
     },
     {
         "cve": "CVE-2026-45247",

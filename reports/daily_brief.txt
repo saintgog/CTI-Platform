@@ -1,6 +1,40 @@
 TOP PRIORITIZED CYBER THREATS
 ============================================================
 
+EXECUTIVE SUMMARY
+------------------------------------------------------------
+Vulnerabilities Analyzed: 10
+Critical Priority: 4
+High Priority: 6
+With GitHub Repositories: 8
+Highest Threat Score: 135
+
+============================================================
+
+CVE: CVE-2026-9082
+Vendor: Drupal
+Product: Core
+CVSS: 9.8
+GitHub Repositories: 9
+Exploit Confidence: MEDIUM
+GitHub Repo Details:
+  - 0xBlackash/CVE-2026-9082 | Stars: 1 | Updated: 2026-06-04T23:58:56Z
+    https://github.com/0xBlackash/CVE-2026-9082
+  - thinhap/CVE-2026-9082-PoC | Stars: 0 | Updated: 2026-05-28T01:38:11Z
+    https://github.com/thinhap/CVE-2026-9082-PoC
+  - ambionics/cve-2026-9082-drupal-postgresql-rce | Stars: 10 | Updated: 2026-05-31T20:43:46Z
+    https://github.com/ambionics/cve-2026-9082-drupal-postgresql-rce
+  - strobelpierre/CVE-2026-9082 | Stars: 0 | Updated: 2026-05-27T09:32:01Z
+    https://github.com/strobelpierre/CVE-2026-9082
+  - N45HT/drupal-cve-2026-9082-checker | Stars: 6 | Updated: 2026-05-28T11:26:19Z
+    https://github.com/N45HT/drupal-cve-2026-9082-checker
+Priority: CRITICAL
+Threat Score: 135
+Summary: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Drupal Drupal core allows SQL Injection.
+
+This issue affects Drupal core: from 8.9.0 before 10.4.10, from 10.5.0 before 10.5.10, from 10.6.0 before 10.6.9, from 11.0.0 before 11.1.10, from 11.2.0 before 11.2.12, from 11.3.0 before 11.3.10.
+------------------------------------------------------------
+
 CVE: CVE-2026-45321
 Vendor: TanStack
 Product: TanStack
@@ -21,30 +55,6 @@ GitHub Repo Details:
 Priority: CRITICAL
 Threat Score: 120
 Summary: On 2026-05-11, between approximately 19:20 and 19:26 UTC, 84 malicious versions across 42 @tanstack/* packages were published to the npm registry. The publishes were authenticated via the legitimate GitHub Actions OIDC trusted-publisher binding for TanStack/router, but the publish workflow itself was not modified. The attacker chained three known vulnerability classes — a pull_request_target "Pwn Request" misconfiguration, GitHub Actions cache poisoning across the fork↔base trust boundary, and runtime memory extraction of the OIDC token from the Actions runner process — to publish credential-stealing malware under a trusted identity. Each affected package received exactly two malicious versions, published a few minutes apart.
-------------------------------------------------------------
-
-CVE: CVE-2026-9082
-Vendor: Drupal
-Product: Core
-CVSS: 9.8
-GitHub Repositories: 9
-Exploit Confidence: MEDIUM
-GitHub Repo Details:
-  - 0xBlackash/CVE-2026-9082 | Stars: 1 | Updated: 2026-06-04T23:58:56Z
-    https://github.com/0xBlackash/CVE-2026-9082
-  - thinhap/CVE-2026-9082-PoC | Stars: 0 | Updated: 2026-05-28T01:38:11Z
-    https://github.com/thinhap/CVE-2026-9082-PoC
-  - ambionics/cve-2026-9082-drupal-postgresql-rce | Stars: 10 | Updated: 2026-05-31T20:43:46Z
-    https://github.com/ambionics/cve-2026-9082-drupal-postgresql-rce
-  - strobelpierre/CVE-2026-9082 | Stars: 0 | Updated: 2026-05-27T09:32:01Z
-    https://github.com/strobelpierre/CVE-2026-9082
-  - N45HT/drupal-cve-2026-9082-checker | Stars: 6 | Updated: 2026-05-28T11:26:19Z
-    https://github.com/N45HT/drupal-cve-2026-9082-checker
-Priority: CRITICAL
-Threat Score: 110
-Summary: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Drupal Drupal core allows SQL Injection.
-
-This issue affects Drupal core: from 8.9.0 before 10.4.10, from 10.5.0 before 10.5.10, from 10.6.0 before 10.6.9, from 11.0.0 before 11.1.10, from 11.2.0 before 11.2.12, from 11.3.0 before 11.3.10.
 ------------------------------------------------------------
 
 CVE: CVE-2026-45247

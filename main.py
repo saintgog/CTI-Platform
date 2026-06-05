@@ -1,5 +1,6 @@
 import json
 import os
+from collectors.exploitdb import search_exploitdb_for_cve
 from collectors.cisa import collect_cisa_kev
 from collectors.nvd import get_nvd_cve_details
 from collectors.github_intel import search_github_for_cve
@@ -19,7 +20,8 @@ def extract_cvss(cve):
     return 0, "UNKNOWN", "NO CVSS"
 
 
-def calculate_threat_score(cvss_score, github_repo_count, in_cisa_kev=True):
+def calculate_threat_score(cvss_score, github_repo_count, exploitdb_count, in_cisa_kev=True):
+
     score = 0
 
     if in_cisa_kev:
@@ -38,6 +40,9 @@ def calculate_threat_score(cvss_score, github_repo_count, in_cisa_kev=True):
         score += 20
     elif github_repo_count >= 1:
         score += 10
+
+    if exploitdb_count >= 1:
+        score += 25
 
     return score
 
@@ -85,13 +90,23 @@ for item in cisa_data["vulnerabilities"][:10]:
     github_repo_count = github_data["total_count"]
     github_repos = github_data["repos"]
 
+    exploitdb_data = search_exploitdb_for_cve(cve_id)
+    exploitdb_count = exploitdb_data["total_count"]
+    exploitdb_exploits = exploitdb_data["exploits"]
+
     exploit_confidence = get_exploit_confidence(
         github_repo_count,
         github_repos
     )
 
     cvss_score, severity, cvss_version = extract_cvss(cve)
-    threat_score = calculate_threat_score(cvss_score, github_repo_count)
+
+    threat_score = calculate_threat_score(
+        cvss_score,
+        github_repo_count,
+        exploitdb_count
+    )
+
     priority = get_priority(threat_score)
     description = cve["descriptions"][0]["value"]
 
@@ -115,6 +130,22 @@ for item in cisa_data["vulnerabilities"][:10]:
 
 
 report.sort(key=lambda x: x["threat_score"], reverse=True)
+critical_count = sum(1 for item in report if item["priority"] == "CRITICAL")
+high_count = sum(1 for item in report if item["priority"] == "HIGH")
+medium_count = sum(1 for item in report if item["priority"] == "MEDIUM")
+low_count = sum(1 for item in report if item["priority"] == "LOW")
+
+github_count = sum(
+    1 for item in report
+    if item["github_repositories"] > 0
+)
+
+highest_score = max(
+    item["threat_score"]
+    for item in report
+)
+
+total_vulnerabilities = len(report)
 
 os.makedirs("reports", exist_ok=True)
 
@@ -123,6 +154,18 @@ with open("reports/daily_report.json", "w", encoding="utf-8") as file:
 
 with open("reports/daily_brief.txt", "w", encoding="utf-8") as file:
     file.write("TOP PRIORITIZED CYBER THREATS\n")
+    file.write("=" * 60 + "\n\n")
+
+    file.write("EXECUTIVE SUMMARY\n")
+    file.write("-" * 60 + "\n")
+
+    file.write(f"Vulnerabilities Analyzed: {total_vulnerabilities}\n")
+    file.write(f"Critical Priority: {critical_count}\n")
+    file.write(f"High Priority: {high_count}\n")
+    file.write(f"With GitHub Repositories: {github_count}\n")
+    file.write(f"Highest Threat Score: {highest_score}\n")
+
+    file.write("\n")
     file.write("=" * 60 + "\n\n")
 
     for item in report:
