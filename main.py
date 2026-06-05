@@ -4,7 +4,8 @@ from collectors.exploitdb import search_exploitdb_for_cve
 from collectors.cisa import collect_cisa_kev
 from collectors.nvd import get_nvd_cve_details
 from collectors.github_intel import search_github_for_cve
-
+from collectors.threat_actor import assess_threat_activity
+from collectors.threat_references import find_threat_references
 
 def extract_cvss(cve):
     metrics = cve.get("metrics", {})
@@ -107,8 +108,16 @@ for item in cisa_data["vulnerabilities"][:10]:
         exploitdb_count
     )
 
+    threat_activity = assess_threat_activity(
+        True,
+        github_repo_count,
+        exploitdb_count
+    )
+
     priority = get_priority(threat_score)
     description = cve["descriptions"][0]["value"]
+
+    threat_references = find_threat_references(description)
 
     report_item = {
         "cve": cve_id,
@@ -118,9 +127,17 @@ for item in cisa_data["vulnerabilities"][:10]:
         "cvss": cvss_score,
         "severity": severity,
         "cvss_version": cvss_version,
+
         "github_repositories": github_repo_count,
         "github_repositories_found": github_repos,
+
+        "exploitdb_results": exploitdb_count,
+        "exploitdb_exploits": exploitdb_exploits,
+
         "exploit_confidence": exploit_confidence,
+        "threat_activity": threat_activity,
+        "threat_references": threat_references,
+
         "threat_score": threat_score,
         "priority": priority,
         "summary": description
@@ -174,12 +191,25 @@ with open("reports/daily_brief.txt", "w", encoding="utf-8") as file:
         file.write(f"Product: {item['product']}\n")
         file.write(f"CVSS: {item['cvss']}\n")
         file.write(f"GitHub Repositories: {item['github_repositories']}\n")
+        file.write(f"Exploit-DB Results: {item['exploitdb_results']}\n")
         file.write(f"Exploit Confidence: {item['exploit_confidence']}\n")
+
         file.write("GitHub Repo Details:\n")
 
         for repo in item["github_repositories_found"]:
-            file.write(f"  - {repo['name']} | Stars: {repo['stars']} | Updated: {repo['updated_at']}\n")
+            file.write(
+                f"  - {repo['name']} | Stars: {repo['stars']} | Updated: {repo['updated_at']}\n"
+            )
             file.write(f"    {repo['url']}\n")
+
+        file.write("Exploit-DB Details:\n")
+
+        for exploit in item["exploitdb_exploits"]:
+            file.write(
+                f"  - {exploit['description']} "
+                f"({exploit['platform']}/{exploit['type']})\n"
+            )
+            file.write(f"    {exploit['url']}\n")
 
         file.write(f"Priority: {item['priority']}\n")
         file.write(f"Threat Score: {item['threat_score']}\n")
@@ -200,6 +230,8 @@ for item in report:
     print("CVSS:", item["cvss"])
     print("GitHub Repositories:", item["github_repositories"])
     print("Exploit Confidence:", item["exploit_confidence"])
+    print("Threat Activity:", item["threat_activity"])
+    print("Threat References:", item["threat_references"])
     print("Priority:", item["priority"])
     print("Threat Score:", item["threat_score"])
     print("-" * 60)
