@@ -1,72 +1,72 @@
 [
     {
         "cve": "CVE-2026-45247",
-        "status": "UNCHANGED",
-        "previous_score": 90,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 90,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2026-48027",
-        "status": "UNCHANGED",
-        "previous_score": 90,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 90,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2026-45321",
-        "status": "UNCHANGED",
-        "previous_score": 90,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 90,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2026-8398",
-        "status": "UNCHANGED",
-        "previous_score": 90,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 90,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2026-48172",
-        "status": "UNCHANGED",
-        "previous_score": 90,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 90,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2026-28318",
-        "status": "UNCHANGED",
-        "previous_score": 75,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 75,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2022-0492",
-        "status": "UNCHANGED",
-        "previous_score": 75,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 75,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2025-48595",
-        "status": "UNCHANGED",
-        "previous_score": 75,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 75,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2024-21182",
-        "status": "UNCHANGED",
-        "previous_score": 75,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 75,
-        "delta": 0
+        "delta": null
     },
     {
         "cve": "CVE-2026-0257",
-        "status": "UNCHANGED",
-        "previous_score": 75,
+        "status": "NEW",
+        "previous_score": null,
         "current_score": 75,
-        "delta": 0
+        "delta": null
     }
 ]

@@ -9,12 +9,22 @@ High Priority: 5
 With GitHub Repositories: 0
 Highest Threat Score: 90
 History Snapshot: data/history/2026-06-06.json
-New CVEs Since Previous Run: 0
+New CVEs Since Previous Run: 10
 Score Increases Since Previous Run: 0
 
 TREND SUMMARY
 ------------------------------------------------------------
-No new CVEs or score increases detected since previous run.
+New CVEs:
+  - CVE-2026-45247 (Score: 90)
+  - CVE-2026-48027 (Score: 90)
+  - CVE-2026-45321 (Score: 90)
+  - CVE-2026-8398 (Score: 90)
+  - CVE-2026-48172 (Score: 90)
+  - CVE-2026-28318 (Score: 75)
+  - CVE-2022-0492 (Score: 75)
+  - CVE-2025-48595 (Score: 75)
+  - CVE-2024-21182 (Score: 75)
+  - CVE-2026-0257 (Score: 75)
 
 ============================================================
 

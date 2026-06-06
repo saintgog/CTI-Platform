@@ -98,6 +98,7 @@ for item in cisa_data["vulnerabilities"][:10]:
     cve_id = item["cveID"]
 
     nvd_data = get_nvd_cve_details(cve_id)
+    
     cve = nvd_data["vulnerabilities"][0]["cve"]
 
     github_data = search_github_for_cve(cve_id)
@@ -209,8 +210,8 @@ github_count = sum(
 )
 
 highest_score = max(
-    item["threat_score"]
-    for item in report
+    (item["threat_score"] for item in report),
+    default=0
 )
 
 total_vulnerabilities = len(report)
