@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Campaign Intelligence
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Campaign Intelligence</h1>
+
+<div class="row">
+
+{% for campaign in campaign_report %}
+
+<div class="col-md-6 col-xl-4">
+
+<div class="campaign-card">
+
+<h3>{{ campaign.actor }}</h3>
+
+<p>
+Associated CVEs:
+{{ campaign.cve_count }}
+</p>
+
+<p>
+Highest Threat Score:
+{{ campaign.highest_threat_score }}
+</p>
+
+{% for cve in campaign.cves %}
+<div>
+<code>{{ cve.cve }}</code>
+</div>
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

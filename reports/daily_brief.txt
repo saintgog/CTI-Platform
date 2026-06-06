@@ -4,121 +4,48 @@ TOP PRIORITIZED CYBER THREATS
 EXECUTIVE SUMMARY
 ------------------------------------------------------------
 Vulnerabilities Analyzed: 10
-Critical Priority: 3
-High Priority: 6
-With GitHub Repositories: 7
-Highest Threat Score: 120
+Critical Priority: 0
+High Priority: 5
+With GitHub Repositories: 0
+Highest Threat Score: 90
+History Snapshot: data/history/2026-06-06.json
+New CVEs Since Previous Run: 0
+Score Increases Since Previous Run: 0
+
+TREND SUMMARY
+------------------------------------------------------------
+No new CVEs or score increases detected since previous run.
 
 ============================================================
 
-CVE: CVE-2026-45321
-Vendor: TanStack
-Product: TanStack
-CVSS: 9.6
-GitHub Repositories: 12
-Exploit-DB Results: 0
-Exploit Confidence: HIGH
-GitHub Repo Details:
-  - nkopylov/tanscript-exploit-check | Stars: 1 | Updated: 2026-05-26T14:46:38Z
-    https://github.com/nkopylov/tanscript-exploit-check
-  - renewablehacking/CVE-2026-45321-Tanstack | Stars: 0 | Updated: 2026-05-25T16:59:59Z
-    https://github.com/renewablehacking/CVE-2026-45321-Tanstack
-  - ry-allan/tanstack-compromise-checker | Stars: 0 | Updated: 2026-05-24T08:43:48Z
-    https://github.com/ry-allan/tanstack-compromise-checker
-  - prashanthnataraj/mini-shai-hulud-detector | Stars: 0 | Updated: 2026-05-21T00:12:26Z
-    https://github.com/prashanthnataraj/mini-shai-hulud-detector
-  - fabriziosalmi/tanstack-compromise-checker | Stars: 1 | Updated: 2026-05-18T16:32:33Z
-    https://github.com/fabriziosalmi/tanstack-compromise-checker
-Exploit-DB Details:
-Priority: CRITICAL
-Threat Score: 120
-Summary: On 2026-05-11, between approximately 19:20 and 19:26 UTC, 84 malicious versions across 42 @tanstack/* packages were published to the npm registry. The publishes were authenticated via the legitimate GitHub Actions OIDC trusted-publisher binding for TanStack/router, but the publish workflow itself was not modified. The attacker chained three known vulnerability classes — a pull_request_target "Pwn Request" misconfiguration, GitHub Actions cache poisoning across the fork↔base trust boundary, and runtime memory extraction of the OIDC token from the Actions runner process — to publish credential-stealing malware under a trusted identity. Each affected package received exactly two malicious versions, published a few minutes apart.
+ACTIVE THREAT ACTOR CAMPAIGNS
 ------------------------------------------------------------
+APT29 (1 CVEs, Highest Score: 75)
+  - CVE-2026-28318 | Priority: MEDIUM | Score: 75 | Exploit Confidence: NONE
+APT28 (1 CVEs, Highest Score: 75)
+  - CVE-2022-0492 | Priority: MEDIUM | Score: 75 | Exploit Confidence: NONE
+Lazarus (1 CVEs, Highest Score: 75)
+  - CVE-2024-21182 | Priority: MEDIUM | Score: 75 | Exploit Confidence: NONE
+Volt Typhoon (1 CVEs, Highest Score: 75)
+  - CVE-2026-0257 | Priority: MEDIUM | Score: 75 | Exploit Confidence: NONE
+
+============================================================
 
 CVE: CVE-2026-45247
 Vendor: Mirasvit
 Product: Mirasvit Full Page Cache Warmer
 CVSS: 9.3
-GitHub Repositories: 1
+GitHub Repositories: 0
 Exploit-DB Results: 0
-Exploit Confidence: LOW
+Exploit Confidence: NONE
 GitHub Repo Details:
-  - HORKimhab/CVE-2026-45247 | Stars: 0 | Updated: 2026-06-04T13:25:22Z
-    https://github.com/HORKimhab/CVE-2026-45247
 Exploit-DB Details:
-Priority: CRITICAL
-Threat Score: 100
+Priority: HIGH
+Threat Score: 90
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - Critical CVSS score (9.3)
 Summary: Mirasvit Full Page Cache Warmer for Magento 2 before version 1.11.12 contains a PHP object injection vulnerability that allows unauthenticated attackers to achieve remote code execution by supplying a crafted serialized PHP object in the CacheWarmer cookie. Attackers can exploit the unrestricted call to PHP's native unserialize() function combined with gadget chains available in Magento and its dependencies to execute arbitrary code on the server.
-------------------------------------------------------------
-
-CVE: CVE-2026-48172
-Vendor: LiteSpeed
-Product: cPanel Plugin
-CVSS: 10.0
-GitHub Repositories: 3
-Exploit-DB Results: 0
-Exploit Confidence: MEDIUM
-GitHub Repo Details:
-  - fevar54/CVE-2026-48172---LiteSpeed-cPanel-Plugin-Version-Auditor | Stars: 0 | Updated: 2026-05-28T16:50:31Z
-    https://github.com/fevar54/CVE-2026-48172---LiteSpeed-cPanel-Plugin-Version-Auditor
-  - HORKimhab/CVE-2026-48172 | Stars: 1 | Updated: 2026-05-26T02:39:37Z
-    https://github.com/HORKimhab/CVE-2026-48172
-  - retmakarunia/CVE-2026-48172 | Stars: 0 | Updated: 2026-05-24T14:58:39Z
-    https://github.com/retmakarunia/CVE-2026-48172
-Exploit-DB Details:
-Priority: CRITICAL
-Threat Score: 100
-Summary: LiteSpeed User-End cPanel Plugin before 2.4.5 allows privilege escalation (possibly to root), as exploited in the wild in May 2026. Detection is best done via a command line of grep -rE "cpanel_jsonapi_func=redisAble" /var/cpanel/logs /usr/local/cpanel/logs/ 2>/dev/null in Bash. If you get no output, you have not been hit with exploitation of the vulnerability. If there is output, we recommend you examine the IP addresses in the list, determine if they are valid IP addresses, and if not, block them. To determine damage done, examine the system logs for use by the detected IP addresses. The issue is related to mishandling of Redis enable/disable features. The recommended minimum version is 2.4.7.
-------------------------------------------------------------
-
-CVE: CVE-2022-0492
-Vendor: Linux
-Product: Kernel
-CVSS: 7.8
-GitHub Repositories: 8
-Exploit-DB Results: 0
-Exploit Confidence: MEDIUM
-GitHub Repo Details:
-  - smallcat9612/CVE-2022-0492-Docker-Breakout-Checker-and-PoC | Stars: 0 | Updated: 2025-12-16T19:03:01Z
-    https://github.com/smallcat9612/CVE-2022-0492-Docker-Breakout-Checker-and-PoC
-  - Perimora/cve_2022_0492 | Stars: 0 | Updated: 2025-07-20T11:10:23Z
-    https://github.com/Perimora/cve_2022_0492
-  - T1erno/CVE-2022-0492-Docker-Breakout-Checker-and-PoC | Stars: 6 | Updated: 2026-05-10T10:41:28Z
-    https://github.com/T1erno/CVE-2022-0492-Docker-Breakout-Checker-and-PoC
-  - yoeelingBin/CVE-2022-0492-Container-Escape | Stars: 2 | Updated: 2022-09-16T14:15:14Z
-    https://github.com/yoeelingBin/CVE-2022-0492-Container-Escape
-  - Trinadh465/device_renesas_kernel_AOSP10_r33_CVE-2022-0492 | Stars: 0 | Updated: 2023-03-10T01:12:55Z
-    https://github.com/Trinadh465/device_renesas_kernel_AOSP10_r33_CVE-2022-0492
-Exploit-DB Details:
-Priority: HIGH
-Threat Score: 95
-Summary: A vulnerability was found in the Linux kernel’s cgroup_release_agent_write in the kernel/cgroup/cgroup-v1.c function. This flaw, under certain circumstances, allows the use of the cgroups v1 release_agent feature to escalate privileges and bypass the namespace isolation unexpectedly.
-------------------------------------------------------------
-
-CVE: CVE-2026-0257
-Vendor: Palo Alto Networks
-Product: PAN-OS
-CVSS: 7.8
-GitHub Repositories: 8
-Exploit-DB Results: 0
-Exploit Confidence: MEDIUM
-GitHub Repo Details:
-  - 0xBlackash/CVE-2026-0257 | Stars: 2 | Updated: 2026-06-05T13:11:31Z
-    https://github.com/0xBlackash/CVE-2026-0257
-  - tushargurav28/CVE-2026-0257 | Stars: 2 | Updated: 2026-06-05T10:53:31Z
-    https://github.com/tushargurav28/CVE-2026-0257
-  - bolubey/CVE-2026-0257 | Stars: 0 | Updated: 2026-06-02T02:52:14Z
-    https://github.com/bolubey/CVE-2026-0257
-  - Mr-Robot-LP/CVE-2026-0257 | Stars: 1 | Updated: 2026-06-01T14:48:59Z
-    https://github.com/Mr-Robot-LP/CVE-2026-0257
-  - jennydokumi30/CVE-2026-0257 | Stars: 0 | Updated: 2026-06-01T00:41:14Z
-    https://github.com/jennydokumi30/CVE-2026-0257
-Exploit-DB Details:
-Priority: HIGH
-Threat Score: 95
-Summary: Authentication bypass vulnerabilities in the GlobalProtect portal and gateway of Palo Alto Networks PAN-OS® software allows the attacker to bypass security restrictions and establish an unauthorized VPN connection.
-
-Panorama and Cloud NGFW are not impacted by these issues.
 ------------------------------------------------------------
 
 CVE: CVE-2026-48027
@@ -132,7 +59,27 @@ GitHub Repo Details:
 Exploit-DB Details:
 Priority: HIGH
 Threat Score: 90
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - Critical CVSS score (9.3)
 Summary: Nx Console is the user interface for Nx & Lerna. On 19 May 2026, a malicious version of Nx Console, 18.95.0, was published at 12:30 PM UTC and removed soon after at 12:48 PM UTC, leaving it available for ~18 minutes in Visual Studio Marketplace. For OpenVSX, the problem was detected later, and the compromised version was available from 12:33 UTC to 13:09 UTC (~36 minutes). Version 18.100.0 of Nx Console is not compromised and users may remediate by upgrading to that version.
+------------------------------------------------------------
+
+CVE: CVE-2026-45321
+Vendor: TanStack
+Product: TanStack
+CVSS: 9.6
+GitHub Repositories: 0
+Exploit-DB Results: 0
+Exploit Confidence: NONE
+GitHub Repo Details:
+Exploit-DB Details:
+Priority: HIGH
+Threat Score: 90
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - Critical CVSS score (9.6)
+Summary: On 2026-05-11, between approximately 19:20 and 19:26 UTC, 84 malicious versions across 42 @tanstack/* packages were published to the npm registry. The publishes were authenticated via the legitimate GitHub Actions OIDC trusted-publisher binding for TanStack/router, but the publish workflow itself was not modified. The attacker chained three known vulnerability classes — a pull_request_target "Pwn Request" misconfiguration, GitHub Actions cache poisoning across the fork↔base trust boundary, and runtime memory extraction of the OIDC token from the Actions runner process — to publish credential-stealing malware under a trusted identity. Each affected package received exactly two malicious versions, published a few minutes apart.
 ------------------------------------------------------------
 
 CVE: CVE-2026-8398
@@ -146,45 +93,27 @@ GitHub Repo Details:
 Exploit-DB Details:
 Priority: HIGH
 Threat Score: 90
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - Critical CVSS score (9.3)
 Summary: A supply chain attack compromised the official installation packages of DAEMON Tools Lite (Windows versions 12.5.0.2421 through 12.5.0.2434), distributed from the legitimate website daemon-tools.cc between approximately April 8, 2026, and May 5, 2026. Attackers gained unauthorized access to the vendor's (AVB Disc Soft) build or distribution infrastructure and trojanized three binaries: DTHelper.exe, DiscSoftBusServiceLite.exe, and DTShellHlp.exe. These files were digitally signed with the legitimate AVB Disc Soft code-signing certificate, allowing the malicious installers to appear trustworthy and bypass signature-based detection.
 ------------------------------------------------------------
 
-CVE: CVE-2025-48595
-Vendor: Android
-Product: Framework
-CVSS: 8.4
-GitHub Repositories: 1
+CVE: CVE-2026-48172
+Vendor: LiteSpeed
+Product: cPanel Plugin
+CVSS: 10.0
+GitHub Repositories: 0
 Exploit-DB Results: 0
-Exploit Confidence: LOW
+Exploit Confidence: NONE
 GitHub Repo Details:
-  - HORKimhab/CVE-2025-48595 | Stars: 0 | Updated: 2026-06-03T00:31:09Z
-    https://github.com/HORKimhab/CVE-2025-48595
 Exploit-DB Details:
 Priority: HIGH
-Threat Score: 85
-Summary: In multiple locations, there is a possible way to achieve code execution due to an integer overflow. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.
-------------------------------------------------------------
-
-CVE: CVE-2024-21182
-Vendor: Oracle
-Product: WebLogic Server
-CVSS: 7.5
-GitHub Repositories: 4
-Exploit-DB Results: 0
-Exploit Confidence: MEDIUM
-GitHub Repo Details:
-  - johnniebozura31/CVE-2024-21182 | Stars: 0 | Updated: 2026-06-05T16:18:03Z
-    https://github.com/johnniebozura31/CVE-2024-21182
-  - dinosn/CVE-2024-21182 | Stars: 3 | Updated: 2026-06-03T02:37:30Z
-    https://github.com/dinosn/CVE-2024-21182
-  - k4it0k1d/CVE-2024-21182 | Stars: 1 | Updated: 2026-03-14T09:13:04Z
-    https://github.com/k4it0k1d/CVE-2024-21182
-  - kursadalsan/CVE-2024-21182 | Stars: 2 | Updated: 2025-02-24T16:54:54Z
-    https://github.com/kursadalsan/CVE-2024-21182
-Exploit-DB Details:
-Priority: HIGH
-Threat Score: 85
-Summary: Vulnerability in the Oracle WebLogic Server product of Oracle Fusion Middleware (component: Core).  Supported versions that are affected are 12.2.1.4.0 and  14.1.1.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via T3, IIOP to compromise Oracle WebLogic Server.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle WebLogic Server accessible data. CVSS 3.1 Base Score 7.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).
+Threat Score: 90
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - Critical CVSS score (10.0)
+Summary: LiteSpeed User-End cPanel Plugin before 2.4.5 allows privilege escalation (possibly to root), as exploited in the wild in May 2026. Detection is best done via a command line of grep -rE "cpanel_jsonapi_func=redisAble" /var/cpanel/logs /usr/local/cpanel/logs/ 2>/dev/null in Bash. If you get no output, you have not been hit with exploitation of the vulnerability. If there is output, we recommend you examine the IP addresses in the list, determine if they are valid IP addresses, and if not, block them. To determine damage done, examine the system logs for use by the detected IP addresses. The issue is related to mishandling of Redis enable/disable features. The recommended minimum version is 2.4.7.
 ------------------------------------------------------------
 
 CVE: CVE-2026-28318
@@ -198,6 +127,83 @@ GitHub Repo Details:
 Exploit-DB Details:
 Priority: MEDIUM
 Threat Score: 75
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - High severity CVSS score (7.5)
+  - Threat actor references detected: APT29
 Summary: SolarWinds Serv-U is susceptible to specially crafted POST requests that crash the Serv-U service without authentication using Content-Encoding: deflate. Mitigation steps are provided to secure customer environments in the SolarWinds Trust Center if you are unable to deploy the update
+------------------------------------------------------------
+
+CVE: CVE-2022-0492
+Vendor: Linux
+Product: Kernel
+CVSS: 7.8
+GitHub Repositories: 0
+Exploit-DB Results: 0
+Exploit Confidence: NONE
+GitHub Repo Details:
+Exploit-DB Details:
+Priority: MEDIUM
+Threat Score: 75
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - High severity CVSS score (7.8)
+  - Threat actor references detected: APT28
+Summary: A vulnerability was found in the Linux kernel’s cgroup_release_agent_write in the kernel/cgroup/cgroup-v1.c function. This flaw, under certain circumstances, allows the use of the cgroups v1 release_agent feature to escalate privileges and bypass the namespace isolation unexpectedly.
+------------------------------------------------------------
+
+CVE: CVE-2025-48595
+Vendor: Android
+Product: Framework
+CVSS: 8.4
+GitHub Repositories: 0
+Exploit-DB Results: 0
+Exploit Confidence: NONE
+GitHub Repo Details:
+Exploit-DB Details:
+Priority: MEDIUM
+Threat Score: 75
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - High severity CVSS score (8.4)
+Summary: In multiple locations, there is a possible way to achieve code execution due to an integer overflow. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.
+------------------------------------------------------------
+
+CVE: CVE-2024-21182
+Vendor: Oracle
+Product: WebLogic Server
+CVSS: 7.5
+GitHub Repositories: 0
+Exploit-DB Results: 0
+Exploit Confidence: NONE
+GitHub Repo Details:
+Exploit-DB Details:
+Priority: MEDIUM
+Threat Score: 75
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - High severity CVSS score (7.5)
+  - Threat actor references detected: Lazarus
+Summary: Vulnerability in the Oracle WebLogic Server product of Oracle Fusion Middleware (component: Core).  Supported versions that are affected are 12.2.1.4.0 and  14.1.1.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via T3, IIOP to compromise Oracle WebLogic Server.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle WebLogic Server accessible data. CVSS 3.1 Base Score 7.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).
+------------------------------------------------------------
+
+CVE: CVE-2026-0257
+Vendor: Palo Alto Networks
+Product: PAN-OS
+CVSS: 7.8
+GitHub Repositories: 0
+Exploit-DB Results: 0
+Exploit Confidence: NONE
+GitHub Repo Details:
+Exploit-DB Details:
+Priority: MEDIUM
+Threat Score: 75
+Assessment Rationale:
+  - Included in CISA Known Exploited Vulnerabilities catalog
+  - High severity CVSS score (7.8)
+  - Threat actor references detected: Volt Typhoon
+Summary: Authentication bypass vulnerabilities in the GlobalProtect portal and gateway of Palo Alto Networks PAN-OS® software allows the attacker to bypass security restrictions and establish an unauthorized VPN connection.
+
+Panorama and Cloud NGFW are not impacted by these issues.
 ------------------------------------------------------------
 

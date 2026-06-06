@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}CTI Dashboard{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+        <div>
+            <p class="eyebrow mb-1">Threat Intelligence Overview</p>
+            <h1 class="display-6 fw-bold mb-2">Analyst Dashboard</h1>
+            <p class="text-secondary mb-0">Live view of <code>reports/daily_report.json</code>, <code>trend_report.json</code>, and <code>campaign_report.json</code>.</p>
+        </div>
+        <div class="text-lg-end d-flex gap-2 justify-content-lg-end align-items-start flex-wrap">
+            <a class="btn btn-outline-light" href="/api/reports" target="_blank">View JSON API</a>
+            <a class="btn btn-success" href="{{ url_for('dashboard') }}">Reset Filters</a>
+        </div>
+    </div>
+</section>
+
+<section class="row g-3 mb-4">
+    <div class="col-6 col-xl-2"><div class="metric-card"><span>Total CVEs</span><strong>{{ stats.total_cves }}</strong><small>{{ stats.filtered_cves }} shown</small></div></div>
+    <div class="col-6 col-xl-2"><div class="metric-card danger"><span>Critical Priority</span><strong>{{ stats.critical_priority }}</strong><small>Immediate analyst review</small></div></div>
+    <div class="col-6 col-xl-2"><div class="metric-card warning"><span>High Priority</span><strong>{{ stats.high_priority }}</strong><small>Escalated watchlist</small></div></div>
+    <div class="col-6 col-xl-2"><div class="metric-card"><span>Highest Score</span><strong>{{ stats.highest_score }}</strong><small>Avg {{ stats.average_score }}</small></div></div>
+    <div class="col-6 col-xl-2"><div class="metric-card"><span>ExploitDB Hits</span><strong>{{ stats.total_exploitdb_results }}</strong><small>{{ stats.cves_with_exploitdb }} CVEs affected</small></div></div>
+    <div class="col-6 col-xl-2"><div class="metric-card"><span>Campaigns</span><strong>{{ stats.campaign_count }}</strong><small>{{ stats.cves_with_threat_refs }} CVEs with refs</small></div></div>
+</section>
+
+<section class="panel mb-4">
+    <form class="row g-3 align-items-end" method="get">
+        <div class="col-lg-5">
+            <label class="form-label">Search</label>
+            <input name="q" value="{{ filters.q }}" class="form-control search-input-wide" placeholder="CVE, vendor, product, LockBit, exploit confidence...">
+        </div>
+        <div class="col-sm-4 col-lg-2">
+            <label class="form-label">Priority</label>
+            <select name="priority" class="form-select dark-select">
+                <option value="all">All</option>
+                {% for option in filters.priorities %}<option value="{{ option|lower }}" {% if filters.priority == option|lower %}selected{% endif %}>{{ option }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-4 col-lg-2">
+            <label class="form-label">Severity</label>
+            <select name="severity" class="form-select dark-select">
+                <option value="all">All</option>
+                {% for option in filters.severities %}<option value="{{ option|lower }}" {% if filters.severity == option|lower %}selected{% endif %}>{{ option }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-4 col-lg-2">
+            <label class="form-label">Exploit Confidence</label>
+            <select name="exploit" class="form-select dark-select">
+                <option value="all">All</option>
+                {% for option in filters.exploit_confidences %}<option value="{{ option|lower }}" {% if filters.exploit == option|lower %}selected{% endif %}>{{ option }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-1 d-grid">
+            <button class="btn btn-success" type="submit">Apply</button>
+        </div>
+    </form>
+</section>
+
+<section class="row g-4 mb-4">
+    <div class="col-xl-4"><div class="panel h-100"><div class="panel-header"><h2>Priority Mix</h2><p>Operational triage categories.</p></div><canvas id="priorityChart" height="240"></canvas></div></div>
+    <div class="col-xl-4"><div class="panel h-100"><div class="panel-header"><h2>Severity Mix</h2><p>CVSS severity distribution.</p></div><canvas id="severityChart" height="240"></canvas></div></div>
+    <div class="col-xl-4"><div class="panel h-100"><div class="panel-header"><h2>Exploit Confidence</h2><p>Evidence level from enrichment.</p></div><canvas id="exploitConfidenceChart" height="240"></canvas></div></div>
+</section>
+
+<section class="row g-4 mb-4">
+    <div class="col-xl-8">
+        <div class="panel">
+            <div class="panel-header d-flex flex-column flex-lg-row justify-content-between gap-3">
+                <div><h2>Prioritized CVEs</h2><p>Server-side filters plus instant in-table search.</p></div>
+                <input id="cveSearch" class="form-control search-input" placeholder="Quick filter visible rows...">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0" id="cveTable">
+                    <thead><tr><th>CVE</th><th>Vendor / Product</th><th>CVSS</th><th>Priority</th><th>Score</th><th>Exploit</th><th>Threat Refs</th></tr></thead>
+                    <tbody>
+                    {% for item in filtered_report %}
+                    <tr class="cve-row" data-summary="{{ item.summary|e }}">
+                        <td><code>{{ item.cve }}</code><button class="btn btn-sm btn-link detail-toggle" type="button">details</button></td>
+                        <td><strong>{{ item.vendor }}</strong><br><span class="text-secondary">{{ item.product }}</span></td>
+                        <td>{{ item.cvss }} <span class="text-secondary">{{ item.cvss_version }}</span><br><span class="badge severity-{{ item.severity|lower }}">{{ item.severity }}</span></td>
+                        <td><span class="badge priority-{{ item.priority|lower }}">{{ item.priority }}</span></td>
+                        <td><span class="score-pill">{{ item.threat_score }}</span></td>
+                        <td>{{ item.exploit_confidence }}<br><small class="text-secondary">GitHub {{ item.github_repositories }} · EDB {{ item.exploitdb_results }}</small></td>
+                        <td>{% if item.threat_references %}{% for ref in item.threat_references %}<span class="badge text-bg-secondary me-1">{{ ref }}</span>{% endfor %}{% else %}<span class="text-secondary">None</span>{% endif %}</td>
+                    </tr>
+                    <tr class="summary-row d-none"><td colspan="7"><div class="summary-box"><strong>Assessment rationale:</strong> {{ item.assessment_rationale|join('; ') }}<br><br><strong>Summary:</strong> {{ item.summary }}</div></td></tr>
+                    {% else %}
+                    <tr><td colspan="7" class="text-center text-secondary py-4">No CVEs match the current filters.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="panel mb-4">
+            <div class="panel-header"><h2>Campaign Correlation</h2><p>Detected actor/campaign references.</p></div>
+            {% if campaign_report %}
+                {% for campaign in campaign_report %}
+                <div class="campaign-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div><h3>{{ campaign.actor }}</h3><p>{{ campaign.cve_count }} CVE(s) correlated</p></div>
+                        <span class="score-pill">{{ campaign.highest_threat_score }}</span>
+                    </div>
+                    <ul class="list-unstyled mb-0">
+                        {% for cve in campaign.cves %}<li><code>{{ cve.cve }}</code> · {{ cve.priority }} · score {{ cve.threat_score }} · {{ cve.threat_activity }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            {% else %}<p class="text-secondary mb-0">No campaign correlations detected yet.</p>{% endif %}
+        </div>
+
+        <div class="panel">
+            <div class="panel-header"><h2>Trend Summary</h2><p>{{ stats.new_cves }} new CVEs · {{ stats.score_increases }} score increases</p></div>
+            <div class="trend-list">
+                {% for trend in trend_report %}<div class="trend-item"><code>{{ trend.cve }}</code><span>{{ trend.status }}</span><strong>{{ trend.previous_score }} → {{ trend.current_score }}</strong></div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row g-4">
+    <div class="col-xl-6"><div class="panel h-100"><div class="panel-header"><h2>Top Vendors</h2></div><canvas id="vendorChart" height="220"></canvas></div></div>
+    <div class="col-xl-6"><div class="panel h-100"><div class="panel-header"><h2>Top Products</h2></div><canvas id="productChart" height="220"></canvas></div></div>
+    <div class="col-xl-6"><div class="panel h-100"><div class="panel-header"><h2>Threat References</h2></div><canvas id="threatRefChart" height="220"></canvas></div></div>
+    <div class="col-xl-6"><div class="panel h-100"><div class="panel-header"><h2>Daily Analyst Brief</h2></div><pre class="brief-box">{{ daily_brief }}</pre></div></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>window.CTI_CHART_DATA = {{ chart_data | tojson }};</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

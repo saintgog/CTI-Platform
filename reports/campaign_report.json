@@ -1,0 +1,58 @@
+[
+    {
+        "actor": "APT29",
+        "cves": [
+            {
+                "cve": "CVE-2026-28318",
+                "priority": "MEDIUM",
+                "threat_score": 75,
+                "exploit_confidence": "NONE",
+                "threat_activity": "MEDIUM"
+            }
+        ],
+        "cve_count": 1,
+        "highest_threat_score": 75
+    },
+    {
+        "actor": "APT28",
+        "cves": [
+            {
+                "cve": "CVE-2022-0492",
+                "priority": "MEDIUM",
+                "threat_score": 75,
+                "exploit_confidence": "NONE",
+                "threat_activity": "MEDIUM"
+            }
+        ],
+        "cve_count": 1,
+        "highest_threat_score": 75
+    },
+    {
+        "actor": "Lazarus",
+        "cves": [
+            {
+                "cve": "CVE-2024-21182",
+                "priority": "MEDIUM",
+                "threat_score": 75,
+                "exploit_confidence": "NONE",
+                "threat_activity": "MEDIUM"
+            }
+        ],
+        "cve_count": 1,
+        "highest_threat_score": 75
+    },
+    {
+        "actor": "Volt Typhoon",
+        "cves": [
+            {
+                "cve": "CVE-2026-0257",
+                "priority": "MEDIUM",
+                "threat_score": 75,
+                "exploit_confidence": "NONE",
+                "threat_activity": "MEDIUM"
+            }
+        ],
+        "cve_count": 1,
+        "highest_threat_score": 75
+    }
+]

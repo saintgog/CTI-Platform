@@ -1,0 +1,179 @@
+:root {
+    --bg: #07111f;
+    --panel: #101b2d;
+    --panel-border: #1f314c;
+    --muted: #96a3b7;
+    --text: #edf3ff;
+    --accent: #63e6be;
+    --danger: #ff6b6b;
+    --warning: #ffd166;
+    --info: #74c0fc;
+}
+
+body {
+    background: radial-gradient(circle at top left, #10223d 0, var(--bg) 38rem);
+    color: var(--text);
+}
+
+.dashboard-nav {
+    background: rgba(7, 17, 31, 0.92);
+    backdrop-filter: blur(12px);
+}
+
+.navbar-brand { color: var(--text); }
+.navbar-brand:hover { color: var(--accent); }
+
+.eyebrow {
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.metric-card,
+.panel,
+.campaign-card {
+    background: linear-gradient(180deg, rgba(16, 27, 45, 0.98), rgba(10, 20, 35, 0.98));
+    border: 1px solid var(--panel-border);
+    border-radius: 1.1rem;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+}
+
+.metric-card {
+    min-height: 128px;
+    padding: 1.1rem;
+}
+
+.metric-card span,
+.metric-card small {
+    color: var(--muted);
+    display: block;
+}
+
+.metric-card span {
+    font-size: 0.86rem;
+    margin-bottom: 0.55rem;
+}
+
+.metric-card small { margin-top: 0.5rem; }
+
+.metric-card strong {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.metric-card.danger strong { color: var(--danger); }
+.metric-card.warning strong { color: var(--warning); }
+
+.panel { padding: 1.1rem; }
+.panel-header { margin-bottom: 1rem; }
+
+.panel-header h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.panel-header p,
+.form-label {
+    color: var(--muted);
+    margin: 0.3rem 0 0;
+}
+
+.form-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.search-input,
+.search-input-wide,
+.dark-select {
+    background: #0b1525;
+    border-color: var(--panel-border);
+    color: var(--text);
+}
+
+.search-input { max-width: 360px; }
+.search-input::placeholder,
+.search-input-wide::placeholder { color: #6e7c92; }
+.dark-select option { background: #0b1525; color: var(--text); }
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--panel-border);
+}
+
+.table th {
+    color: #c9d6ea;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.badge { letter-spacing: 0.02em; }
+.priority-critical, .severity-critical { background: #b02a37; }
+.priority-high, .severity-high { background: #b86e00; }
+.priority-medium, .severity-medium { background: #0d6efd; }
+.priority-low, .severity-low { background: #198754; }
+
+.detail-toggle {
+    color: var(--accent);
+    font-size: 0.78rem;
+    padding: 0 0 0 0.4rem;
+    text-decoration: none;
+}
+
+.summary-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 0.9rem;
+    color: #d9e7ff;
+    padding: 1rem;
+}
+
+.campaign-card { padding: 1rem; margin-bottom: 1rem; }
+.campaign-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.2rem; }
+.campaign-card p, .campaign-card li { color: var(--muted); }
+
+.score-pill {
+    align-items: center;
+    background: rgba(99, 230, 190, 0.12);
+    border: 1px solid rgba(99, 230, 190, 0.35);
+    border-radius: 999px;
+    color: var(--accent);
+    display: inline-flex;
+    font-weight: 800;
+    justify-content: center;
+    min-width: 3.2rem;
+    padding: 0.35rem 0.7rem;
+}
+
+.trend-list { display: grid; gap: 0.65rem; }
+.trend-item {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.8rem;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr auto auto;
+    padding: 0.75rem;
+}
+.trend-item span { color: var(--muted); font-size: 0.82rem; }
+
+.brief-box {
+    background: #08111f;
+    border: 1px solid var(--panel-border);
+    border-radius: 0.9rem;
+    color: #d9e7ff;
+    max-height: 420px;
+    overflow: auto;
+    padding: 1rem;
+    white-space: pre-wrap;
+}
+
+code { color: #9ef0d5; }

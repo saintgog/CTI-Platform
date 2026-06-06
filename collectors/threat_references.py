@@ -1,125 +1,38 @@
-THREAT_GROUP_ALIASES = {
-    "Volt Typhoon": [
-        "Volt Typhoon"
-    ],
-    "Salt Typhoon": [
-        "Salt Typhoon"
-    ],
-    "APT41": [
-        "APT41",
-        "Barium",
-        "Wicked Panda"
-    ],
-    "APT40": [
-        "APT40",
-        "Leviathan"
-    ],
-    "APT31": [
-        "APT31",
-        "Zirconium"
-    ],
-    "Mustang Panda": [
-        "Mustang Panda",
-        "Bronze President"
-    ],
-    "APT28": [
-        "APT28",
-        "Fancy Bear",
-        "Forest Blizzard"
-    ],
-    "APT29": [
-        "APT29",
-        "Cozy Bear",
-        "Midnight Blizzard"
-    ],
-    "Sandworm": [
-        "Sandworm",
-        "Voodoo Bear"
-    ],
-    "Turla": [
-        "Turla",
-        "Snake"
-    ],
-    "Lazarus": [
-        "Lazarus",
-        "Hidden Cobra"
-    ],
-    "Kimsuky": [
-        "Kimsuky"
-    ],
-    "Andariel": [
-        "Andariel"
-    ],
-    "APT33": [
-        "APT33",
-        "Elfin"
-    ],
-    "APT34": [
-        "APT34",
-        "OilRig"
-    ],
-    "APT35": [
-        "APT35",
-        "Charming Kitten"
-    ],
-    "LockBit": [
-        "LockBit"
-    ],
-    "Clop": [
-        "Clop",
-        "Cl0p"
-    ],
-    "ALPHV": [
-        "ALPHV",
-        "BlackCat"
-    ],
-    "Akira": [
-        "Akira"
-    ],
-    "Play": [
-        "Play ransomware"
-    ],
-    "Black Basta": [
-        "Black Basta"
-    ],
-    "Royal": [
-        "Royal ransomware"
-    ],
-    "RansomHub": [
-        "RansomHub"
-    ],
-    "Medusa": [
-        "Medusa ransomware"
-    ],
-    "Scattered Spider": [
-        "Scattered Spider",
-        "UNC3944"
-    ],
-    "FIN7": [
-        "FIN7"
-    ],
-    "FIN8": [
-        "FIN8"
-    ],
-    "UNC3886": [
-        "UNC3886"
-    ],
-    "UNC2452": [
-        "UNC2452",
-        "Nobelium"
-    ]
+THREAT_ACTORS = {
+    "APT29": ["apt29", "midnight blizzard", "cozy bear", "the dukes"],
+    "APT28": ["apt28", "fancy bear", "sofacy", "strontium"],
+    "LockBit": ["lockbit", "lockbit 3.0"],
+    "ALPHV": ["alphv", "blackcat", "noberus"],
+    "Scattered Spider": ["scattered spider", "unc3944", "octo tempest", "0ktapus"],
+    "Lazarus": ["lazarus", "hidden cobra", "zinc"],
+    "Volt Typhoon": ["volt typhoon", "vanguard panda"],
+    "Clop": ["clop", "cl0p"],
+    "Akira": ["akira ransomware"],
+    "Black Basta": ["black basta"],
+    "FIN7": ["fin7", "carbanak"],
+    "FIN11": ["fin11"],
+    "TA505": ["ta505"],
+    "Sandworm": ["sandworm", "voodoo bear"],
+    "OilRig": ["oilrig", "apt34", "helix kitten"],
+    "MuddyWater": ["muddywater", "static kitten", "seedworm"],
+    "Kimsuky": ["kimsuky", "velvet chollima"],
+    "Turla": ["turla", "snake", "venomous bear"],
+    "Mustang Panda": ["mustang panda", "bronze president"],
+    "Charming Kitten": ["charming kitten", "apt35", "phosphorus"],
 }
 
 
 def find_threat_references(text):
+    if not text:
+        return []
+
+    text = text.lower()
     matches = []
 
-    text_lower = text.lower()
-
-    for group_name, aliases in THREAT_GROUP_ALIASES.items():
+    for actor, aliases in THREAT_ACTORS.items():
         for alias in aliases:
-            if alias.lower() in text_lower:
-                matches.append(group_name)
+            if alias.lower() in text:
+                matches.append(actor)
                 break
 
     return matches

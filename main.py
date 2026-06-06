@@ -1,11 +1,24 @@
 import json
 import os
 from collectors.exploitdb import search_exploitdb_for_cve
+from collectors.cisa_advisories import search_cisa_advisory_text
 from collectors.cisa import collect_cisa_kev
 from collectors.nvd import get_nvd_cve_details
 from collectors.github_intel import search_github_for_cve
 from collectors.threat_actor import assess_threat_activity
 from collectors.threat_references import find_threat_references
+from collectors.rationale import build_assessment_rationale
+from collectors.campaign_mapper import infer_campaign
+from collectors.campaign_tracker import build_campaign_report
+from collectors.cisa_advisories import (
+    search_cisa_advisory_text,
+    collect_recent_cisa_advisory_text
+)
+from collectors.history import (
+    save_daily_history,
+    load_previous_history,
+    compare_with_previous_history
+)
 
 def extract_cvss(cve):
     metrics = cve.get("metrics", {})
@@ -78,7 +91,7 @@ def get_exploit_confidence(github_repo_count, github_repos):
 
 
 cisa_data = collect_cisa_kev()
-
+recent_cisa_advisories = collect_recent_cisa_advisory_text()
 report = []
 
 for item in cisa_data["vulnerabilities"][:10]:
@@ -115,10 +128,48 @@ for item in cisa_data["vulnerabilities"][:10]:
     )
 
     priority = get_priority(threat_score)
+
     description = cve["descriptions"][0]["value"]
 
-    threat_references = find_threat_references(description)
+    cisa_advisories = search_cisa_advisory_text(cve_id)
 
+    print(
+        f"{cve_id}: matched CISA advisories = {len(cisa_advisories)}"
+    )
+
+    advisory_text = " ".join(
+        advisory["text"] for advisory in cisa_advisories
+    )
+
+    recent_advisory_text = " ".join(
+        advisory["text"] for advisory in recent_cisa_advisories
+    )
+
+    combined_threat_text = (
+    description + " " +
+    advisory_text + " " +
+    recent_advisory_text
+    )
+
+    threat_references = find_threat_references(
+    combined_threat_text
+)
+
+    if not threat_references:
+        inferred_actor = infer_campaign(
+            item["vendorProject"],
+            item["product"]
+        )
+
+        if inferred_actor:
+            threat_references.append(inferred_actor)
+
+    rationale = build_assessment_rationale(
+        cvss_score,
+        github_repo_count,
+        exploitdb_count,
+        threat_references
+    )
     report_item = {
         "cve": cve_id,
         "vendor": item["vendorProject"],
@@ -127,23 +178,23 @@ for item in cisa_data["vulnerabilities"][:10]:
         "cvss": cvss_score,
         "severity": severity,
         "cvss_version": cvss_version,
-
+        "assessment_rationale": rationale,
+        "cisa_advisories": cisa_advisories,
+        "cisa_advisory_count": len(cisa_advisories),
         "github_repositories": github_repo_count,
         "github_repositories_found": github_repos,
-
         "exploitdb_results": exploitdb_count,
         "exploitdb_exploits": exploitdb_exploits,
-
         "exploit_confidence": exploit_confidence,
         "threat_activity": threat_activity,
         "threat_references": threat_references,
-
         "threat_score": threat_score,
         "priority": priority,
         "summary": description
     }
 
     report.append(report_item)
+
 
 
 report.sort(key=lambda x: x["threat_score"], reverse=True)
@@ -163,7 +214,14 @@ highest_score = max(
 )
 
 total_vulnerabilities = len(report)
-
+previous_report = load_previous_history()
+trend_report = compare_with_previous_history(report, previous_report)
+history_path = save_daily_history(report)
+campaign_report = build_campaign_report(report)
+with open("reports/trend_report.json", "w", encoding="utf-8") as file:
+    json.dump(trend_report, file, indent=4)
+with open("reports/campaign_report.json", "w", encoding="utf-8") as file:
+    json.dump(campaign_report, file, indent=4)
 os.makedirs("reports", exist_ok=True)
 
 with open("reports/daily_report.json", "w", encoding="utf-8") as file:
@@ -181,10 +239,73 @@ with open("reports/daily_brief.txt", "w", encoding="utf-8") as file:
     file.write(f"High Priority: {high_count}\n")
     file.write(f"With GitHub Repositories: {github_count}\n")
     file.write(f"Highest Threat Score: {highest_score}\n")
+    file.write(f"History Snapshot: {history_path}\n")
+
+    score_increases = [
+        trend for trend in trend_report
+        if trend["delta"] is not None and trend["delta"] > 0
+    ]
+
+    new_cves = [
+        trend for trend in trend_report
+        if trend["status"] == "NEW"
+    ]
+
+    file.write(f"New CVEs Since Previous Run: {len(new_cves)}\n")
+    file.write(f"Score Increases Since Previous Run: {len(score_increases)}\n")
+
+    file.write("\n")
+    file.write("TREND SUMMARY\n")
+    file.write("-" * 60 + "\n")
+
+    if not new_cves and not score_increases:
+        file.write("No new CVEs or score increases detected since previous run.\n")
+
+    if new_cves:
+        file.write("New CVEs:\n")
+
+        for trend in new_cves:
+            file.write(
+                f"  - {trend['cve']} "
+                f"(Score: {trend['current_score']})\n"
+            )
+
+    if score_increases:
+        file.write("Score Increases:\n")
+
+        for trend in score_increases:
+            file.write(
+                f"  - {trend['cve']} "
+                f"({trend['previous_score']} -> "
+                f"{trend['current_score']}, "
+                f"+{trend['delta']})\n"
+            )
 
     file.write("\n")
     file.write("=" * 60 + "\n\n")
+    file.write("ACTIVE THREAT ACTOR CAMPAIGNS\n")
+    file.write("-" * 60 + "\n")
 
+    if not campaign_report:
+        file.write("No threat actor campaign references detected.\n")
+
+    for campaign in campaign_report:
+        file.write(
+            f"{campaign['actor']} "
+            f"({campaign['cve_count']} CVEs, "
+            f"Highest Score: {campaign['highest_threat_score']})\n"
+        )
+
+        for cve_item in campaign["cves"]:
+            file.write(
+                f"  - {cve_item['cve']} | "
+                f"Priority: {cve_item['priority']} | "
+                f"Score: {cve_item['threat_score']} | "
+                f"Exploit Confidence: {cve_item['exploit_confidence']}\n"
+            )
+
+    file.write("\n")
+    file.write("=" * 60 + "\n\n")
     for item in report:
         file.write(f"CVE: {item['cve']}\n")
         file.write(f"Vendor: {item['vendor']}\n")
@@ -213,6 +334,11 @@ with open("reports/daily_brief.txt", "w", encoding="utf-8") as file:
 
         file.write(f"Priority: {item['priority']}\n")
         file.write(f"Threat Score: {item['threat_score']}\n")
+        file.write("Assessment Rationale:\n")
+
+        for reason in item["assessment_rationale"]:
+            file.write(f"  - {reason}\n")
+
         file.write(f"Summary: {item['summary']}\n")
         file.write("-" * 60 + "\n\n")
 
@@ -231,7 +357,17 @@ for item in report:
     print("GitHub Repositories:", item["github_repositories"])
     print("Exploit Confidence:", item["exploit_confidence"])
     print("Threat Activity:", item["threat_activity"])
-    print("Threat References:", item["threat_references"])
+
+    if item["threat_references"]:
+        print(
+            "Threat References:",
+            ", ".join(item["threat_references"])
+        )
+    else:
+        print(
+            "Threat References: None"
+        )
+
     print("Priority:", item["priority"])
     print("Threat Score:", item["threat_score"])
     print("-" * 60)

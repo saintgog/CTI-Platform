@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+Analytics
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Analytics</h1>
+
+<div class="row">
+
+<div class="col-lg-6">
+<div class="panel">
+<h3>Severity Distribution</h3>
+<canvas id="severityChart"></canvas>
+</div>
+</div>
+
+<div class="col-lg-6">
+<div class="panel">
+<h3>Top Vendors</h3>
+<canvas id="vendorChart"></canvas>
+</div>
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+window.CTI_CHART_DATA =
+{{ chart_data | tojson }};
+</script>
+
+<script src="{{ url_for('static',
+filename='js/dashboard.js') }}">
+</script>
+
+{% endblock %}

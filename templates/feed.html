@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Intel Feed
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Intelligence Feed</h1>
+
+{% for item in feed_items %}
+
+<div class="campaign-card">
+
+<strong>[{{ item.level }}]</strong>
+
+{{ item.message }}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

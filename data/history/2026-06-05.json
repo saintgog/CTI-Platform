@@ -134,8 +134,7 @@
         "cvss_version": "CVSS v3.1",
         "assessment_rationale": [
             "Included in CISA Known Exploited Vulnerabilities catalog",
-            "High severity CVSS score (7.5)",
-            "Threat actor references detected: APT29"
+            "High severity CVSS score (7.5)"
         ],
         "cisa_advisories": [],
         "cisa_advisory_count": 0,
@@ -145,9 +144,7 @@
         "exploitdb_exploits": [],
         "exploit_confidence": "NONE",
         "threat_activity": "MEDIUM",
-        "threat_references": [
-            "APT29"
-        ],
+        "threat_references": [],
         "threat_score": 75,
         "priority": "MEDIUM",
         "summary": "SolarWinds Serv-U is susceptible to specially crafted POST requests that crash the Serv-U service without authentication using Content-Encoding: deflate. Mitigation steps are provided to secure customer environments in the SolarWinds Trust Center if you are unable to deploy the update"
@@ -162,8 +159,7 @@
         "cvss_version": "CVSS v3.1",
         "assessment_rationale": [
             "Included in CISA Known Exploited Vulnerabilities catalog",
-            "High severity CVSS score (7.8)",
-            "Threat actor references detected: APT28"
+            "High severity CVSS score (7.8)"
         ],
         "cisa_advisories": [],
         "cisa_advisory_count": 0,
@@ -173,9 +169,7 @@
         "exploitdb_exploits": [],
         "exploit_confidence": "NONE",
         "threat_activity": "MEDIUM",
-        "threat_references": [
-            "APT28"
-        ],
+        "threat_references": [],
         "threat_score": 75,
         "priority": "MEDIUM",
         "summary": "A vulnerability was found in the Linux kernel\u2019s cgroup_release_agent_write in the kernel/cgroup/cgroup-v1.c function. This flaw, under certain circumstances, allows the use of the cgroups v1 release_agent feature to escalate privileges and bypass the namespace isolation unexpectedly."
@@ -215,8 +209,7 @@
         "cvss_version": "CVSS v3.1",
         "assessment_rationale": [
             "Included in CISA Known Exploited Vulnerabilities catalog",
-            "High severity CVSS score (7.5)",
-            "Threat actor references detected: Lazarus"
+            "High severity CVSS score (7.5)"
         ],
         "cisa_advisories": [],
         "cisa_advisory_count": 0,
@@ -226,9 +219,7 @@
         "exploitdb_exploits": [],
         "exploit_confidence": "NONE",
         "threat_activity": "MEDIUM",
-        "threat_references": [
-            "Lazarus"
-        ],
+        "threat_references": [],
         "threat_score": 75,
         "priority": "MEDIUM",
         "summary": "Vulnerability in the Oracle WebLogic Server product of Oracle Fusion Middleware (component: Core).  Supported versions that are affected are 12.2.1.4.0 and  14.1.1.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via T3, IIOP to compromise Oracle WebLogic Server.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle WebLogic Server accessible data. CVSS 3.1 Base Score 7.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)."
@@ -243,8 +234,7 @@
         "cvss_version": "CVSS v4.0",
         "assessment_rationale": [
             "Included in CISA Known Exploited Vulnerabilities catalog",
-            "High severity CVSS score (7.8)",
-            "Threat actor references detected: Volt Typhoon"
+            "High severity CVSS score (7.8)"
         ],
         "cisa_advisories": [],
         "cisa_advisory_count": 0,
@@ -254,9 +244,7 @@
         "exploitdb_exploits": [],
         "exploit_confidence": "NONE",
         "threat_activity": "MEDIUM",
-        "threat_references": [
-            "Volt Typhoon"
-        ],
+        "threat_references": [],
         "threat_score": 75,
         "priority": "MEDIUM",
         "summary": "Authentication bypass vulnerabilities in the GlobalProtect portal and gateway of Palo Alto Networks PAN-OS\u00ae software allows the attacker to bypass security restrictions and establish an unauthorized VPN connection.\n\nPanorama and Cloud NGFW are not impacted by these issues."
